@@ -1,0 +1,2 @@
+rails new timetracker -d=postgresql --skip-test-unit
+
