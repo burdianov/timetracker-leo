@@ -25,5 +25,7 @@ $ (enter)
 
 rails g model Account subdomain owner_id:integer
 
+configure shoulda matchers in rails_helper.rb
+
 # after writing the Account model specs prepare the test database:
 $ rake db:test:prepare
