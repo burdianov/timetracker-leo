@@ -1,5 +1,2 @@
 rails new timetracker -d=postgresql --skip-test-unit
 
-remove the folders: "vendor", "test", "lib" 
-
-edit config/database.yml
