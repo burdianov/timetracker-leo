@@ -1,3 +1,5 @@
+### 01 ###
+
 rails new timetracker -d=postgresql --skip-test-unit
 
 Delete redundant folders
@@ -19,3 +21,6 @@ Create spec/features folder and account_creation_feature_spec
 $ guard
 $ (enter)
 
+### 02 ###
+
+rails g model Account subdomain owner_id:integer
