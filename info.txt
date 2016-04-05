@@ -1,8 +1,19 @@
 rails new timetracker -d=postgresql --skip-test-unit
 
-guard init
+Delete redundant folders
+Edit database.yml
+Edit Gemfile
+Remove Turbolinks from Gemfile, application.js and application.html.erb
 
-rails g rspec:install
+# Init guard:
+$ guard init
+
+# Install RSpec:
+$ rails g rspec:install
+
+Configure RSpec in rails_helper.rb
+
+Create spec/features folder and account_creation_feature_spec
 
 # run rspec with guard
 $ guard
