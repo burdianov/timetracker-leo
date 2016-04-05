@@ -4,3 +4,7 @@ guard init
 
 rails g rspec:install
 
+# run rspec with guard
+$ guard
+$ (enter)
+

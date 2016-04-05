@@ -43,7 +43,7 @@ RSpec.configure do |config|
     DatabaseCleaner.start
   end
 
-  cofing.after(:each) do
+  config.after(:each) do
     DatabaseCleaner.clean
   end
 end
