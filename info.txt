@@ -29,3 +29,9 @@ configure shoulda matchers in rails_helper.rb
 
 # after writing the Account model specs prepare the test database:
 $ rake db:test:prepare
+
+work on passing the validation specs
+
+### 03 ###
+
+update routes.rb
