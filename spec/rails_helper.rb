@@ -31,6 +31,8 @@ ActiveRecord::Migration.maintain_test_schema!
 
 RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
+  config.include Rails.application.routes.url_helpers
+  config.include Capybara::DSL
   # config.include Devise::TestHelpers, type: :controller
   config.order = "random"
 
