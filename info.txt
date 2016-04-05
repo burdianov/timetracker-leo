@@ -1,3 +1,6 @@
 rails new timetracker -d=postgresql --skip-test-unit
 
 guard init
+
+rails g rspec:install
+
