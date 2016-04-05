@@ -24,3 +24,6 @@ $ (enter)
 ### 02 ###
 
 rails g model Account subdomain owner_id:integer
+
+# after writing the Account model specs prepare the test database:
+$ rake db:test:prepare
