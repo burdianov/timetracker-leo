@@ -284,11 +284,127 @@ $ rails generate simple_form:install --bootstrap
     <h2>Create an Account</h2>
 
     <%= simple_form_for @account do |f| %>
-      <p>
-        <%= f.input :subdomain %>
-        <!-- <span class="input-group-addon">.timetracker.dev</span>   -->
-      </p>
+      <%= f.input :subdomain %>
+      <!-- <span class="input-group-addon">.timetracker.dev</span>   -->
       <%= f.button :submit, class: 'btn btn-primary' %>
     <% end %>
   </div>
 </div>
+
+
+# inside account_creation_feature_spec.rb uncomment the fill_in lines
+
+## inside account_rspec.rb
+# add directly after describe 'validations':
+    it { should validate_presence_of :owner }
+# inside describe 'associations' replace the code with:
+it { should belong_to :owner }
+
+# create spec/models/user_spec.rb and add:
+require 'rails_helper'
+
+RSpec.describe User, type: :model do
+  describe 'validations' do
+    it { should validate_presence_of(:name) }
+    it { should validate_presence_of(:email) }
+    it { should validate_presence_of(:password) }
+
+  end
+
+  describe 'associations' do
+
+  end
+end
+
+# add to Gemfile:
+gem 'devise'
+
+# run devise generator:
+$ rails g devise:install
+
+# generate devise model:
+$ rails g devise User
+
+## inside migration file devise_create_users.rb 
+# comment out the ## Trackable secion
+# on top add a string field for name
+t.string :name
+
+# migrate the database
+$ rake db:migrate
+# migrate the test database
+$ rake db:test:prepare
+
+# iniside initializers/devise.rb change the password min. length from 8 to 2 for testing and development purpose:
+  config.password_length = 2..72
+
+## inside models/user.rb 
+# remove :registerable and :trackable devise modules
+# also add:
+validates :name, presence: true
+
+# inside models/account.rb add:
+belongs_to :owner, class_name: 'User'
+validates :owner, presence: true
+
+# inside spec/factories/accounts.rb replace the existing code with:
+FactoryGirl.define do
+  factory :account do
+    sequence(:subdomain) { |n| "subdomain#{n}" }
+    association :owner, factory: :user
+  end
+end
+
+# inside spec/factories/users.rb replace the existing code with:
+FactoryGirl.define do
+  factory :user do
+    name 'Ryan'
+    sequence(:email) { |n| "email#{n}@gmail.com" }
+    password 'pw'
+  end
+end
+
+# inside models/account.rb add the line:
+  accepts_nested_attributes_for :owner
+
+## inside accounts_controller.rb
+# replace the code of new method with:
+    @account = Account.new
+    @account.build_owner
+# replace the code of account_params with:
+    params.require(:account).permit(:subdomain, owner_attributes: [:name, :email, :password, :password_confirmation])
+
+# inside views/accounts/new.html.erb replace the existing code with:
+<div class="col-md-6 col-md-offset-3 panel panel-default">
+  <div class="panel-body">
+    <h2>Create an Account</h2>
+
+    <%= simple_form_for @account do |f| %>
+      <%= f.fields_for :owner do |o| %>
+        <%= o.input :name %>
+        <%= o.input :email %>
+        <%= o.input :password %>
+        <%= o.input :password_confirmation %>
+      <% end %>    
+  
+      <%= f.input :subdomain %>
+      <!-- <span class="input-group-addon">.timetracker.dev</span>   -->
+      <%= f.button :submit, class: 'btn btn-primary' %>
+    <% end %>
+  </div>
+</div>
+
+# add inside Gemfile:
+gem 'pry'
+
+# the following code can be inserted inside spec files as a breakpoint to track down errors:
+binding.pry
+
+## when in debug mode:
+$ page
+# list the methods of page
+$ ls page -m
+# check page text
+$ page.text
+
+# inside account_creation_feature_spec.rb, replace capital 'C' with lower case 'c' in "Password Confirmation"
