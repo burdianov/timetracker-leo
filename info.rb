@@ -269,3 +269,26 @@ body {
     <p><%= link_to 'Create Account', new_account_path, class: 'btn btn-primary btn-lg' %></p>
   </div>
 </div>
+
+# inside Gemfile add:
+gem 'simple_form'
+
+# run:
+$ rails generate simple_form:install --bootstrap
+
+# restart server
+
+# inside views/accounts/new.html.erb, replace the existing code with:
+<div class="col-md-6 col-md-offset-3 panel panel-default">
+  <div class="panel-body">
+    <h2>Create an Account</h2>
+
+    <%= simple_form_for @account do |f| %>
+      <p>
+        <%= f.input :subdomain %>
+        <!-- <span class="input-group-addon">.timetracker.dev</span>   -->
+      </p>
+      <%= f.button :submit, class: 'btn btn-primary' %>
+    <% end %>
+  </div>
+</div>
