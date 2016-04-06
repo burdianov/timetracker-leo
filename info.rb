@@ -212,3 +212,32 @@ end
   <% flash.each do |name, msg| %>
     <%= content_tag :div, msg, id: "flash_#{name}" %>
   <% end %>
+
+## add bootstrap
+# inside Gemfile add:
+gem 'bootstrap-sass'
+
+# rename assets/stylesheets/application.css to application.scss and add:
+@import 'bootstrap';
+@import 'layout';
+
+# inside assets/javascripts/application.js, above  //= require_tree .  add:
+//= require bootstrap
+
+# create assets/stylesheets/layout.scss and add:
+body {
+  padding-top: 20px;
+}
+
+#flash-notice {
+  @extend .alert;
+  @extend .alert-success;
+}
+#flash-error {
+  @extend .alert;
+  @extend .alert-danger;
+}
+#flash-warning {
+  @extend .alert;
+  @extend .alert-warning;
+}
