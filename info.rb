@@ -260,3 +260,12 @@ body {
     <%= yield %>
   </div>
 </div>
+
+# inside welcome/index.html.rb add:
+<div class="col-md-12">
+  <div class="jumbotron">
+    <h1>Time Tracker</h1>
+    <p>Track your time with most awesome time tracking ever app.</p>
+    <p><%= link_to 'Create Account', new_account_path, class: 'btn btn-primary btn-lg' %></p>
+  </div>
+</div>
